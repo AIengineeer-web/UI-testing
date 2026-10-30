@@ -1,3 +1,4 @@
+
 /* ═══════════════════════════════════════════════════════
    CREATIQUE — Neomorphism + Editorial Typography UI
    White / Black / Purple palette
@@ -404,7 +405,18 @@ svg { display: block; }
 /* ── Hero ─────────────────────────────────────────────── */
 .hero {
   margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 280px;
 }
+
+/* Left: text content */
+.hero-content {
+  flex: 1;
+  min-width: 0;
+}
+
 .hero-eyebrow {
   font-size: 11px;
   font-weight: 600;
@@ -434,7 +446,6 @@ svg { display: block; }
 .hero-headline em {
   font-style: italic;
   color: var(--purple);
-  /* animated gradient shimmer on the italic word */
   background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 40%, #e879f9 70%, var(--purple) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -461,6 +472,31 @@ svg { display: block; }
   gap: 14px;
   animation: fadeUp 0.55s cubic-bezier(.22,1,.36,1) 0.72s both;
 }
+
+/* Right: video */
+.hero-video-wrap {
+  flex-shrink: 0;
+  width: clamp(260px, 32vw, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: fadeIn 0.8s ease 0.5s both;
+  /* subtle glow behind the video */
+  filter: drop-shadow(0 0 40px rgba(108,63,197,0.18));
+}
+.hero-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
+  /* This is the magic — removes white/light backgrounds */
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  pointer-events: none;
+}
+/* If the video has a dark background, swap to 'screen' instead:
+   mix-blend-mode: screen; */
 
 /* ── Buttons ──────────────────────────────────────────── */
 .btn-primary {
@@ -809,6 +845,8 @@ svg { display: block; }
   .sidebar { width: 200px; padding: 22px 14px; }
   .workspace { padding: 22px 24px 60px; }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+  .hero { gap: 0; }
+  .hero-video-wrap { width: clamp(200px, 28vw, 300px); }
 }
 @media (max-width: 720px) {
   body { flex-direction: column; }
@@ -824,6 +862,16 @@ svg { display: block; }
   .nav-item { padding: 10px; }
   .sidebar-footer { display: none; }
   .workspace { padding: 24px 20px 48px; }
+  .hero {
+    flex-direction: column-reverse;
+    gap: 24px;
+    min-height: auto;
+  }
+  .hero-video-wrap {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
   .hero-headline { font-size: 36px; }
 }
 @media (prefers-reduced-motion: reduce) {
