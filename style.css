@@ -473,30 +473,57 @@ svg { display: block; }
   animation: fadeUp 0.55s cubic-bezier(.22,1,.36,1) 0.72s both;
 }
 
-/* Right: video */
+/* Right: video — small elegant floating card */
 .hero-video-wrap {
   flex-shrink: 0;
-  width: clamp(260px, 32vw, 420px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 280px;
+  height: 280px;
+  border-radius: 28px;
+  background: var(--bg);
+  box-shadow:
+    12px 12px 32px rgba(163,163,180,0.5),
+    -8px -8px 20px rgba(255,255,255,0.92),
+    0 0 0 1px rgba(108,63,197,0.06);
+  overflow: hidden;
   position: relative;
-  animation: fadeIn 0.8s ease 0.5s both;
-  /* subtle glow behind the video */
-  filter: drop-shadow(0 0 40px rgba(108,63,197,0.18));
+  margin-left: 40px;
+  animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.55s forwards,
+             videoFloat 5s ease-in-out 1.3s infinite;
+}
+/* soft purple inner glow ring */
+.hero-video-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  border: 1.5px solid rgba(108,63,197,0.15);
+  pointer-events: none;
+  z-index: 2;
+}
+/* shimmer overlay that sweeps once on load */
+.hero-video-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+  border-radius: 28px;
+  pointer-events: none;
+  z-index: 2;
 }
 .hero-video {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  border-radius: 24px;
-  /* This is the magic — removes white/light backgrounds */
   mix-blend-mode: multiply;
-  opacity: 0.92;
+  opacity: 0.95;
   pointer-events: none;
+  border-radius: 28px;
 }
-/* If the video has a dark background, swap to 'screen' instead:
-   mix-blend-mode: screen; */
+@keyframes videoFloat {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-8px); }
+}
 
 /* ── Buttons ──────────────────────────────────────────── */
 .btn-primary {
@@ -845,8 +872,7 @@ svg { display: block; }
   .sidebar { width: 200px; padding: 22px 14px; }
   .workspace { padding: 22px 24px 60px; }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
-  .hero { gap: 0; }
-  .hero-video-wrap { width: clamp(200px, 28vw, 300px); }
+  .hero-video-wrap { width: 220px; height: 220px; margin-left: 20px; }
 }
 @media (max-width: 720px) {
   body { flex-direction: column; }
@@ -862,15 +888,9 @@ svg { display: block; }
   .nav-item { padding: 10px; }
   .sidebar-footer { display: none; }
   .workspace { padding: 24px 20px 48px; }
-  .hero {
-    flex-direction: column-reverse;
-    gap: 24px;
-    min-height: auto;
-  }
+  .hero { gap: 0; }
   .hero-video-wrap {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
+    display: none; /* hide on mobile — typography is king */
   }
   .hero-headline { font-size: 36px; }
 }
